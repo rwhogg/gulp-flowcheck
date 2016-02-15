@@ -1,0 +1,32 @@
+{
+  "name": "gulp-flow",
+  "version": "0.1.0",
+  "description": "Gulp plugin for Flow",
+  "main": "GulpFlow.js",
+  "scripts": {
+    "prepublish": "git submodule update --init && git submodule update && gulp lint",
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/rwhogg/gulp-flow"
+  },
+  "keywords": [
+    "gulp",
+    "flow",
+    "gulpplugin"
+  ],
+  "author": "Bob W. Hogg",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-jscs": "^3.0.2",
+    "gulp-yuidoc": "^0.1.2"
+  },
+  "dependencies": {
+    "gulp-util": "^3.0.6",
+    "flow-bin": "^0.21.0",
+    "through2": "^2.0.0",
+    "yajscf": "^1.0.3"
+  }
+}
