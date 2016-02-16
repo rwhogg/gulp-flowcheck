@@ -35,7 +35,7 @@ module.exports = Class.extend(
             }
             try
             {
-                var output = execFileSync(flow, _.union(me.options, ["check-contents"]), {
+                var output = execFile(flow, _.union(me.options, ["check-contents"]), {
                     input: file.contents
                 });
             }
