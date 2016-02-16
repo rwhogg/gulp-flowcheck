@@ -1,6 +1,6 @@
 {
   "name": "gulp-flow",
-  "version": "0.1.0",
+  "version": "0.1.0-alpha",
   "description": "Gulp plugin for Flow",
   "main": "GulpFlow.js",
   "scripts": {
@@ -31,5 +31,8 @@
     "through2": "^2.0.0",
     "underscore": "^1.8.3",
     "yajscf": "^1.0.3"
+  },
+  "engines": {
+    "node": ">=5.0"
   }
 }
