@@ -13,8 +13,7 @@ module.exports = Class.extend(
     init: function()
     {
         this.options = [
-            "--old-output-format",
-            "--one-line"
+            "--json"
         ];
     },
 
@@ -38,7 +37,7 @@ module.exports = Class.extend(
                 //console.dir(file.contents.toString("utf-8"));                
                 var output = execFile(flow, _.union(["check-contents"], me.options), {
                     input: file.contents.toString("utf-8")
-                });
+                }).toString("utf-8");
             }
             catch(e)
             {
