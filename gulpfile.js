@@ -1,7 +1,6 @@
 var gulp = require("gulp");
 var ava = require("gulp-ava");
 var jscs = require("gulp-jscs");
-var yuidoc = require("gulp-yuidoc");
 
 gulp.task("lint", function()
 {
