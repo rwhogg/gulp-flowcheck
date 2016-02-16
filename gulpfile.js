@@ -15,10 +15,3 @@ gulp.task("test", function()
     return gulp.src("test.js")
         .pipe(ava());
 });
-
-gulp.task("doc", function()
-{
-    return gulp.src("./GulpFlow.js")
-        .pipe(yuidoc())
-        .pipe(gulp.dest("./docs"))
-});
