@@ -61,13 +61,16 @@ module.exports = Class.extend(
                 callback();
                 return;
             }
-            else if(file.isStream())
+
+            if(file.isStream())
             {
                 this.emit("error", new PluginError(me.PLUGIN_NAME, "streams are not supported (yet?)"));
             }
+
+            var output;
             try
             {
-                var output = execFile(flow, _.union(["check-contents"], me.options), {
+                output = execFile(flow, _.union(["check-contents"], me.options), {
                     input: file.contents.toString("utf-8")
                 }).toString("utf-8");
             }
@@ -103,7 +106,7 @@ module.exports = Class.extend(
         return through.obj(function(file, encoding, callback)
         {
             _.forEach(me.results, gutil.log);
-            // FIXME: I forgot to pass the files along!
+            callback(null, file);
         });
     }
 });
