@@ -35,7 +35,7 @@ module.exports = Class.extend(
             }
             try
             {
-                var output = execFile(flow, _.union(me.options, ["check-contents"]), {
+                var output = execFile(flow, _.union(["check-contents"], me.options), {
                     input: file.contents
                 });
             }
