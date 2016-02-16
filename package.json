@@ -19,9 +19,8 @@
   "author": "Bob W. Hogg",
   "license": "BSD-3-Clause",
   "devDependencies": {
-    "event-stream": "^3.3.2",
     "gulp": "^3.9.0",
-    "gulp-ava": "^0.8.0",
+    "gulp-ava": "git://github.com/rwhogg/gulp-ava.git",
     "gulp-jscs": "^3.0.2",
     "gulp-yuidoc": "^0.1.2",
     "vinyl": "^1.1.1"
