@@ -20,13 +20,16 @@
   "license": "BSD-3-Clause",
   "devDependencies": {
     "gulp": "^3.9.0",
+    "gulp-ava": "git://github.com/rwhogg/gulp-ava.git",
     "gulp-jscs": "^3.0.2",
-    "gulp-yuidoc": "^0.1.2"
+    "gulp-yuidoc": "^0.1.2",
+    "vinyl": "^1.1.1"
   },
   "dependencies": {
-    "gulp-util": "^3.0.6",
     "flow-bin": "^0.21.0",
+    "gulp-util": "^3.0.6",
     "through2": "^2.0.0",
+    "underscore": "^1.8.3",
     "yajscf": "^1.0.3"
   }
 }
