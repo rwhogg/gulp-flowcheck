@@ -1,3 +1,4 @@
+var _ = require("underscore");
 var Class = require("yajscf");
 var through = require("through2");
 var gutil = require("gulp-util");
@@ -11,14 +12,13 @@ module.exports = Class.extend(
 {
     init: function()
     {
-        this.options =
-        [
+        this.options = [
             "--old-output-format",
             "--one-line"
         ];
     },
 
-    doc: function()
+    check: function()
     {
         var me = this;
         return through.obj(function(file, encoding, callback)
@@ -29,7 +29,7 @@ module.exports = Class.extend(
             }
             try
             {
-                var output = execFileSync(flow, me.options, {
+                var output = execFileSync(flow, _.union(me.options, ["check-contents"]), {
                     input: file.contents
                 });
             }
