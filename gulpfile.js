@@ -18,8 +18,7 @@ gulp.task("test", function()
 
 gulp.task("doc", function()
 {
-    return gulp.src("GulpFlow.js")
-        .pipe(yuidoc.parser())
-        .pipe(yuidoc.generator())
-        .pipe(gulp.dest("docs"));
+    return gulp.src("./GulpFlow.js")
+        .pipe(yuidoc())
+        .pipe(gulp.dest("./docs"))
 });

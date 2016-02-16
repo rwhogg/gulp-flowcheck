@@ -1,3 +1,10 @@
+/**
+ * GulpFlow provides a [gulp](https://gulpjs.com) plugin for [Flow](https://flowtype.org).
+ *
+ * @module GulpFlow
+ * @main GulpFlow
+ */
+
 var _ = require("underscore");
 var Class = require("yajscf");
 var through = require("through2");
@@ -8,6 +15,11 @@ var flow = require("flow-bin");
 
 const PLUGIN_NAME = "gulp-flow";
 
+/**
+ * GulpFlow is a Gulp plugin for type-checking code with `flow`.
+ *
+ * @class GulpFlow
+ */
 module.exports = Class.extend(
 {
     init: function()
