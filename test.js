@@ -10,7 +10,8 @@ test.serial("buffer mode", function(t)
     var contents = new Buffer(stringContents);
 
     var fakeFile = new File({
-        contents: contents
+        contents: contents,
+        path: "test/buffer.js"
     });
     var gulpFlow = new GulpFlow();
     var checker = gulpFlow.check();
@@ -19,8 +20,6 @@ test.serial("buffer mode", function(t)
     {
         t["true"](file.isBuffer());
         t.is(file.contents.toString("utf-8"), stringContents);
-        console.log("done!");
-
-
+        console.dir(gulpFlow.results);
     });
 });
