@@ -41,7 +41,7 @@ module.exports = Class.extend(
             }
             catch(e)
             {
-                this.emit("error", new PluginError(PLUGIN_NAME, e.toString()));
+                // flow normally exits with a non-zero status if errors are found
             }
             me.results[file.path] = output;
 
