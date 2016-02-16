@@ -49,7 +49,7 @@ module.exports = Class.extend(
             callback();
         });
     },
-    
+
     reporter: function()
     {
         var me = this;
