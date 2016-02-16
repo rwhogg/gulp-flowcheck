@@ -1,5 +1,5 @@
 /**
- * GulpFlow provides a [gulp](https://gulpjs.com) plugin for [Flow](https://flowtype.org).
+ * GulpFlow provides a [gulp](https://gulpjs.com) plugin for [Flow](http://flowtype.org).
  *
  * @module GulpFlow
  * @main GulpFlow
