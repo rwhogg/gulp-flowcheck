@@ -21,11 +21,17 @@ module.exports = Class.extend(
     check: function()
     {
         var me = this;
+        this.results = [];
         return through.obj(function(file, encoding, callback)
         {
-            if(file.isStream())
+            if(file.isNull())
             {
-                throw new PluginError("streams are not supported (yet?)");
+                callback();
+                return;
+            }
+            else if(file.isStream())
+            {
+                this.emit("error", new PluginError(PLUGIN_NAME, "streams are not supported (yet?)"));
             }
             try
             {
@@ -35,12 +41,21 @@ module.exports = Class.extend(
             }
             catch(e)
             {
-                throw new PluginError(e.toString());
+                this.emit("error", new PluginError(PLUGIN_NAME, e.toString()));
             }
-            gutil.log(output);
+            me.results[file.path] = output;
 
             this.push(file);
             callback();
+        });
+    },
+    
+    reporter: function()
+    {
+        var me = this;
+        return through.obj(function(file, encoding, callback)
+        {
+            _.forEach(me.results, gutil.log);
         });
     }
 });
