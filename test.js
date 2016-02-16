@@ -5,7 +5,7 @@ var fs = require("fs");
 var File = require("vinyl");
 var GulpFlow = require("./GulpFlow.js");
 
-test.serial("buffer mode", function(t)
+test.serial("buffer mode", async function(t)
 {
     var stringContents = fs.readFileSync("test/buffer.js", "utf-8");
     var contents = new Buffer(stringContents);
@@ -25,7 +25,6 @@ test.serial("buffer mode", function(t)
         t.is(file.contents.toString("utf-8"), stringContents);
         
         // check that the results are correct
-        console.dir(gulpFlow.results);
         _.forEach(gulpFlow.results, function(resultJSON, index)
         {
             // check that the path is correct
@@ -34,6 +33,21 @@ test.serial("buffer mode", function(t)
             // check that we failed
             var result = JSON.parse(resultJSON);
             t["false"](result.passed);
+            
+            // check that we got the errors we expected
+            var errors = result.errors; 
+            t.is(errors.length, 2);
+            var expected = [
+                "object literal This type is incompatible with string",
+                "number This type is incompatible with string"
+            ];
+            var i = -1;
+            _.forEach(errors, function(error)
+            {
+                i++;
+                var text = _.pluck(error.message, "descr").join(" ");
+                t.is(text, expected[i]);
+            });
         });
     });
 });

@@ -1,10 +1,6 @@
 /* @flow */
 function f(x)
 {
-    var y = 5;
-    return x + y;
+    return x + 5;
 }
-
-f(5); // ok
-f("pizza"); // uh...
-f({egg: "plant"}); // no way Jose!
+f({egg: "plant"});
