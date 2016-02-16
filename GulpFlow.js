@@ -33,7 +33,7 @@ module.exports = Class.extend(
         this.options = [
             "--json"
         ];
-        
+
         /**
          * Name of this plugin.
          *
@@ -76,7 +76,7 @@ module.exports = Class.extend(
                 // flow normally exits with a non-zero status if errors are found
                 output = e.stdout.toString("utf-8");
             }
-            
+
             /**
              * Results of the type check.
              *
