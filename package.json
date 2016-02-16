@@ -4,8 +4,10 @@
   "description": "Gulp plugin for Flow",
   "main": "GulpFlow.js",
   "scripts": {
-    "prepublish": "git submodule update --init && git submodule update && gulp lint",
-    "test": "gulp test"
+    "prepublish": "git submodule update --init && git submodule update && npm run-script lint",
+    "lint": "gulp lint",
+    "test": "gulp test",
+    "doc": "gulp doc"
   },
   "repository": {
     "type": "git",
