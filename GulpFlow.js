@@ -13,8 +13,6 @@ var PluginError = gutil.PluginError;
 var execFile = require("child_process").execFileSync;
 var flow = require("flow-bin");
 
-const PLUGIN_NAME = "gulp-flow";
-
 module.exports = Class.extend(
 {
     /**
@@ -35,6 +33,14 @@ module.exports = Class.extend(
         this.options = [
             "--json"
         ];
+        
+        /**
+         * Name of this plugin.
+         *
+         * @property PLUGIN_NAME
+         * @type string
+         */
+        this.PLUGIN_NAME = "gulp-flow";
     },
 
     /**
@@ -57,7 +63,7 @@ module.exports = Class.extend(
             }
             else if(file.isStream())
             {
-                this.emit("error", new PluginError(PLUGIN_NAME, "streams are not supported (yet?)"));
+                this.emit("error", new PluginError(me.PLUGIN_NAME, "streams are not supported (yet?)"));
             }
             try
             {
