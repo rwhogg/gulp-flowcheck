@@ -35,14 +35,17 @@ module.exports = Class.extend(
             }
             try
             {
+                //console.dir(file.contents.toString("utf-8"));                
                 var output = execFile(flow, _.union(["check-contents"], me.options), {
-                    input: file.contents
+                    input: file.contents.toString("utf-8")
                 });
             }
             catch(e)
             {
                 // flow normally exits with a non-zero status if errors are found
+                output = e.stdout.toString("utf-8");
             }
+            //console.dir(output.toString());
             me.results[file.path] = output;
 
             this.push(file);
