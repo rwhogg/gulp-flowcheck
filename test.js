@@ -48,6 +48,7 @@ test.serial("buffer mode", async function(t)
                 var text = _.pluck(error.message, "descr").join(" ");
                 t.is(text, expected[i]);
             });
+            console.log("we did get this far, right?");
         });
     });
 });
