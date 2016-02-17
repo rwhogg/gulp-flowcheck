@@ -6,7 +6,7 @@
   "scripts": {
     "prepublish": "git submodule update --init && git submodule update && npm run-script lint",
     "lint": "gulp lint",
-    "test": "mocha test.js",
+    "test": "mocha --timeout 5000 test.js",
     "doc": "yuidoc"
   },
   "repository": {
