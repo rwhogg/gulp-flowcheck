@@ -11,8 +11,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com/rwhogg/gulp-flow"
+    "url": "git@github.com/rwhogg/gulp-flowcheck"
   },
+  "bugs": "https://github.com/rwhogg/gulp-flowcheck/issues",
   "keywords": [
     "gulp",
     "flow",

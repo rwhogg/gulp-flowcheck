@@ -1,7 +1,7 @@
 {
     "name": "Gulp Flow API",
     "description": "[gulp](https://gulpjs.com) plugin for [Flow](http://flowtype.org)",
-    "url": "https://github.com/rwhogg/gulp-flow",
+    "url": "https://github.com/rwhogg/gulp-flowcheck",
     "paths": ".",
     "options": {
         "outdir": "docs",
