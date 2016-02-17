@@ -1,0 +1,120 @@
+{
+    "project": {
+        "name": "Gulp Flow API",
+        "description": "[gulp](https://gulpjs.com) plugin for [Flow](http://flowtype.org)",
+        "url": "https://github.com/rwhogg/gulp-flowcheck",
+        "paths": ".",
+        "version": "0.1.1"
+    },
+    "files": {
+        "/home/bob/src/gulp-flow/GulpFlow.js": {
+            "name": "/home/bob/src/gulp-flow/GulpFlow.js",
+            "modules": {
+                "GulpFlow": 1
+            },
+            "classes": {
+                "GulpFlow": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {
+        "GulpFlow": {
+            "name": "GulpFlow",
+            "submodules": {},
+            "elements": {},
+            "classes": {
+                "GulpFlow": 1
+            },
+            "fors": {},
+            "namespaces": {},
+            "tag": "main",
+            "file": "/home/bob/src/gulp-flow/GulpFlow.js",
+            "line": 18,
+            "description": "GulpFlow provides a [gulp](https://gulpjs.com) plugin for [Flow](http://flowtype.org).",
+            "itemtype": "main"
+        }
+    },
+    "classes": {
+        "GulpFlow": {
+            "name": "GulpFlow",
+            "shortname": "GulpFlow",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "GulpFlow",
+            "namespace": "",
+            "file": "/home/bob/src/gulp-flow/GulpFlow.js",
+            "line": 18,
+            "description": "GulpFlow is a Gulp plugin for type-checking code with `flow`.",
+            "is_constructor": 1
+        }
+    },
+    "elements": {},
+    "classitems": [
+        {
+            "file": "/home/bob/src/gulp-flow/GulpFlow.js",
+            "line": 26,
+            "description": "Options to pass to the `flow` binary.",
+            "itemtype": "property",
+            "name": "options",
+            "type": "string[]",
+            "access": "private",
+            "tagname": "",
+            "class": "GulpFlow",
+            "module": "GulpFlow"
+        },
+        {
+            "file": "/home/bob/src/gulp-flow/GulpFlow.js",
+            "line": 37,
+            "description": "Name of this plugin.",
+            "itemtype": "property",
+            "name": "PLUGIN_NAME",
+            "type": "string",
+            "class": "GulpFlow",
+            "module": "GulpFlow"
+        },
+        {
+            "file": "/home/bob/src/gulp-flow/GulpFlow.js",
+            "line": 46,
+            "description": "Check for type errors and store them in `this.results`.\nOnly compatible with buffers at the moment.",
+            "itemtype": "method",
+            "name": "check",
+            "return": {
+                "description": "A gulp-compatible stream.",
+                "type": "Object"
+            },
+            "class": "GulpFlow",
+            "module": "GulpFlow"
+        },
+        {
+            "file": "/home/bob/src/gulp-flow/GulpFlow.js",
+            "line": 83,
+            "description": "Results of the type check.",
+            "itemtype": "property",
+            "name": "results",
+            "type": "String",
+            "access": "private",
+            "tagname": "",
+            "class": "GulpFlow",
+            "module": "GulpFlow"
+        },
+        {
+            "file": "/home/bob/src/gulp-flow/GulpFlow.js",
+            "line": 97,
+            "description": "Dump the results of the type check to the command line.",
+            "itemtype": "method",
+            "name": "reporter",
+            "return": {
+                "description": "A gulp-compatible stream.",
+                "type": "Object"
+            },
+            "class": "GulpFlow",
+            "module": "GulpFlow"
+        }
+    ],
+    "warnings": []
+}
