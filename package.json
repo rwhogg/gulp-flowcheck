@@ -1,5 +1,5 @@
 {
-  "name": "gulp-flow",
+  "name": "gulp-flowtype",
   "version": "0.1.0",
   "description": "Gulp plugin for Flow",
   "main": "GulpFlow.js",

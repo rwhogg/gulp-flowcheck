@@ -40,7 +40,7 @@ module.exports = Class.extend(
          * @property PLUGIN_NAME
          * @type string
          */
-        this.PLUGIN_NAME = "gulp-flow";
+        this.PLUGIN_NAME = "gulp-flowtype";
     },
 
     /**
