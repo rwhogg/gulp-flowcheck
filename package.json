@@ -7,9 +7,7 @@
     "prepublish": "git submodule update --init && git submodule update && npm run-script lint",
     "lint": "gulp lint",
     "test": "gulp test",
-    "doc": "yuidoc",
-    "codeclimate": "codeclimate analyze",
-    "jslint": "jslint4java --eqeq --es5 --vars --sloppy --indent 4 --plusplus --white --nomen --node GulpFlow.js"
+    "doc": "yuidoc"
   },
   "repository": {
     "type": "git",
@@ -26,7 +24,6 @@
     "gulp": "^3.9.0",
     "gulp-ava": "git://github.com/rwhogg/gulp-ava.git",
     "gulp-jscs": "^3.0.2",
-    "jslint4java-bin": "^2.0.5",
     "vinyl": "^1.1.1",
     "yuidocjs": "^0.10.0"
   },
