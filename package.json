@@ -6,7 +6,7 @@
   "scripts": {
     "prepublish": "git submodule update --init && git submodule update && npm run-script lint",
     "lint": "gulp lint",
-    "test": "gulp test",
+    "test": "mocha test.js",
     "doc": "yuidoc"
   },
   "repository": {
@@ -22,8 +22,8 @@
   "license": "BSD-3-Clause",
   "devDependencies": {
     "gulp": "^3.9.0",
-    "gulp-ava": "git://github.com/rwhogg/gulp-ava.git",
     "gulp-jscs": "^3.0.2",
+    "mocha": "^2.4.5",
     "vinyl": "^1.1.1",
     "yuidocjs": "^0.10.0"
   },
