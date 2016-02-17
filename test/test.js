@@ -2,7 +2,7 @@ var _ = require("underscore");
 var assert = require("assert");
 var fs = require("fs");
 var File = require("vinyl");
-var GulpFlow = require("./GulpFlow.js");
+var GulpFlow = require("../GulpFlow.js");
 
 describe("buffer mode", function()
 {
