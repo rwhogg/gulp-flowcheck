@@ -1,14 +1,14 @@
-# Gulp-Flowtype
+# Gulp-Flowcheck
 A [gulp](https://gulpjs.com) plugin for [Flow](http://flowtype.org).
 
 ## Installation
 ```bash
-$ npm install --save-dev gulp-flowtype;
+$ npm install --save-dev gulp-flowcheck;
 ```
 
 ## Usage
 ```js
-var GulpFlow = require("gulp-flowtype");
+var GulpFlow = require("gulp-flowcheck");
 var gulpFlow = new GulpFlow();
 
 gulp.task("flow", function()
