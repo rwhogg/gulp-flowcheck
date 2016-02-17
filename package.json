@@ -1,6 +1,6 @@
 {
   "name": "gulp-flow",
-  "version": "0.1.0-alpha",
+  "version": "0.1.0",
   "description": "Gulp plugin for Flow",
   "main": "GulpFlow.js",
   "scripts": {
