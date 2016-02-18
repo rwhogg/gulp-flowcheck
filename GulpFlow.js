@@ -115,10 +115,15 @@ module.exports = Class.extend(
             var md = "";
             _.forEach(messages, function(message)
             {
-                var descr = message.descr;
-                var line = message.line;
-                var column = message.column;
-                md += line + ":" + column + ": " + descr;
+                md += "<pre>\n";
+                _.forEach(message, function(part)
+                {
+                    var descr = part.descr;
+                    var line = part.line;
+                    var column = part.start;
+                    md += line + ":" + column + ": " + descr + "\n";
+                });
+                md += "</pre>\n";
             });
             // FIXME: we should store these and log it as a flush instead.
             gutil.log("\n* " + "[" + file.path + "](" + url + ")\n\n" + indentString(md, " ", 4));
