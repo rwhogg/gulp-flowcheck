@@ -95,8 +95,18 @@ module.exports = Class.extend(
     {
         return through.obj(function(file, encoding, callback)
         {
+            if(file.isNull())
+            {
+                callback();
+                return;
+            }
+
+            if(file.isStream())
+            {
+                this.emit("error", new PluginError(me.PLUGIN_NAME, "streams are not supported (yet?)"));
+            }
+
             var contents = file.contents.toString(encoding);
-            //console.dir(contents);
             var errors = JSON.parse(contents).errors;
             gutil.log("\n" + file.path + ":");
             _.forEach(errors, gutil.log);
@@ -108,6 +118,16 @@ module.exports = Class.extend(
     {
         return through.obj(function(file, encoding, callback)
         {
+            if(file.isNull())
+            {
+                callback();
+                return;
+            }
+
+            if(file.isStream())
+            {
+                this.emit("error", new PluginError(me.PLUGIN_NAME, "streams are not supported (yet?)"));
+            }
             var contents = file.contents.toString(encoding);
             var errors = JSON.parse(contents).errors;
             var messages = _.pluck(errors, "message");
