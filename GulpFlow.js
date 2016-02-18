@@ -12,6 +12,8 @@ var gutil = require("gulp-util");
 var PluginError = gutil.PluginError;
 var execFile = require("child_process").execFileSync;
 var flow = require("flow-bin");
+var indentString = require("indent-string");
+var fileUrl = require("file-url");
 
 module.exports = Class.extend(
 {
@@ -78,7 +80,7 @@ module.exports = Class.extend(
                 // flow normally exits with a non-zero status if errors are found
                 output = e.stdout;
             }
-            file.contents = output;
+            file.contents = output; // FIXME: you should parse, correct the paths, and then restringify!
             callback(null, file);
         });
     },
@@ -98,6 +100,28 @@ module.exports = Class.extend(
             var errors = JSON.parse(contents).errors;
             gutil.log("\n" + file.path + ":");
             _.forEach(errors, gutil.log);
+            callback(null, file);
+        });
+    },
+
+    markdownReporter: function()
+    {
+        return through.obj(function(file, encoding, callback)
+        {
+            var contents = file.contents.toString(encoding);
+            var errors = JSON.parse(contents).errors;
+            var messages = _.pluck(errors, "message");
+            var url = fileUrl(file.path);
+            var md = "";
+            _.forEach(messages, function(message)
+            {
+                var descr = message.descr;
+                var line = message.line;
+                var column = message.column;
+                md += line + ":" + column + ": " + descr;
+            });
+            // FIXME: we should store these and log it as a flush instead.
+            gutil.log("\n* " + "[" + file.path + "](" + url + ")\n\n" + indentString(md, " ", 4));
             callback(null, file);
         });
     }

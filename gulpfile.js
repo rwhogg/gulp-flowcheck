@@ -14,5 +14,5 @@ gulp.task("manual-test", function()
 {
     return gulp.src("test/buffer.js")
         .pipe(gulpFlow.check())
-        .pipe(gulpFlow.reporter());
+        .pipe(gulpFlow.markdownReporter());
 });
