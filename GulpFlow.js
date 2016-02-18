@@ -96,6 +96,7 @@ module.exports = Class.extend(
             var contents = file.contents.toString(encoding);
             //console.dir(contents);
             var errors = JSON.parse(contents).errors;
+            gutil.log("\n" + file.path + ":");
             _.forEach(errors, gutil.log);
             callback(null, file);
         });
