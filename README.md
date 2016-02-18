@@ -21,3 +21,15 @@ gulp.task("flow", function()
 });
 ```
 
+### Automatically adding `@flow` headers
+You can use [gulp-header](https://github.com/godaddy/gulp-header) to add the `@flow` headers to your source code
+automatically:
+
+```js
+var header = require("gulp-header");
+
+gulp.src("*.js")
+	.pipe(header("/* @flow */"))
+	.pipe(gulpFlow.check())
+	...
+```
