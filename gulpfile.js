@@ -1,6 +1,6 @@
 var gulp = require("gulp");
 var GulpFlow = require("./GulpFlow.js");
-var gulpFlow = new GulpFlow(["--old-output-format"]);
+var gulpFlow = new GulpFlow();
 var jscs = require("gulp-jscs");
 
 gulp.task("lint", function()
