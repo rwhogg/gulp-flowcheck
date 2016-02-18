@@ -1,6 +1,6 @@
 var gulp = require("gulp");
 var GulpFlow = require("./GulpFlow.js");
-var gulpFlow = new GulpFlow(["--old-output-format"]);
+var gulpFlow = new GulpFlow();
 var jscs = require("gulp-jscs");
 
 gulp.task("lint", function()
@@ -14,5 +14,5 @@ gulp.task("manual-test", function()
 {
     return gulp.src("test/buffer.js")
         .pipe(gulpFlow.check())
-        .pipe(gulpFlow.reporter());
+        .pipe(gulpFlow.markdownReporter());
 });

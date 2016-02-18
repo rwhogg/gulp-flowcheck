@@ -12,6 +12,8 @@ var gutil = require("gulp-util");
 var PluginError = gutil.PluginError;
 var execFile = require("child_process").execFileSync;
 var flow = require("flow-bin");
+var indentString = require("indent-string");
+var fileUrl = require("file-url");
 
 module.exports = Class.extend(
 {
@@ -20,10 +22,8 @@ module.exports = Class.extend(
      *
      * @class GulpFlow
      * @constructor
-     * @method init
-     * @param {string[]} options Options to pass to the `flow` binary.
      */
-    init: function(options)
+    init: function()
     {
         /**
          * Options to pass to the `flow` binary.
@@ -32,7 +32,9 @@ module.exports = Class.extend(
          * @type string[]
          * @private
          */
-        this.options = options || ["--json"];
+        this.options = [
+            "--json"
+        ];
 
         /**
          * Name of this plugin.
@@ -53,7 +55,6 @@ module.exports = Class.extend(
     check: function()
     {
         var me = this;
-        this.results = {};
         return through.obj(function(file, encoding, callback)
         {
             if(file.isNull())
@@ -71,26 +72,16 @@ module.exports = Class.extend(
             try
             {
                 output = execFile(flow, _.union(["check-contents"], me.options), {
-                    input: file.contents.toString("utf-8")
-                }).toString("utf-8");
+                    input: file.contents.toString(encoding)
+                });
             }
             catch(e)
             {
                 // flow normally exits with a non-zero status if errors are found
-                output = e.stdout.toString("utf-8");
+                output = e.stdout;
             }
-
-            /**
-             * Results of the type check.
-             *
-             * @property results
-             * @type String
-             * @private
-             */
-            me.results[file.path] = output;
-
-            this.push(file);
-            callback();
+            file.contents = output; // FIXME: you should parse, correct the paths, and then restringify!
+            callback(null, file);
         });
     },
 
@@ -102,10 +93,40 @@ module.exports = Class.extend(
      */
     reporter: function()
     {
-        var me = this;
         return through.obj(function(file, encoding, callback)
         {
-            _.forEach(me.results, gutil.log);
+            var contents = file.contents.toString(encoding);
+            //console.dir(contents);
+            var errors = JSON.parse(contents).errors;
+            gutil.log("\n" + file.path + ":");
+            _.forEach(errors, gutil.log);
+            callback(null, file);
+        });
+    },
+
+    markdownReporter: function()
+    {
+        return through.obj(function(file, encoding, callback)
+        {
+            var contents = file.contents.toString(encoding);
+            var errors = JSON.parse(contents).errors;
+            var messages = _.pluck(errors, "message");
+            var url = fileUrl(file.path);
+            var md = "";
+            _.forEach(messages, function(message)
+            {
+                md += "<pre>\n";
+                _.forEach(message, function(part)
+                {
+                    var descr = part.descr;
+                    var line = part.line;
+                    var column = part.start;
+                    md += line + ":" + column + ": " + descr + "\n";
+                });
+                md += "</pre>\n";
+            });
+            // FIXME: we should store these and log it as a flush instead.
+            gutil.log("\n* " + "[" + file.path + "](" + url + ")\n\n" + indentString(md, " ", 4));
             callback(null, file);
         });
     }

@@ -30,8 +30,10 @@
     "yuidocjs": "^0.10.0"
   },
   "dependencies": {
+    "file-url": "^1.0.1",
     "flow-bin": "^0.21.0",
     "gulp-util": "^3.0.6",
+    "indent-string": "^2.1.0",
     "through2": "^2.0.0",
     "underscore": "^1.8.3",
     "yajscf": "^1.0.3"
