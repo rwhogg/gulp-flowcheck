@@ -42,6 +42,7 @@ module.exports = Class.extend(
          */
         this.PLUGIN_NAME = "gulp-flowcheck";
     },
+
     /**
      * Check for type errors and store them in `this.results`.
      * Only compatible with buffers at the moment.
@@ -53,7 +54,7 @@ module.exports = Class.extend(
     {
         var me = this;
         this.results = {};
-        return through.obj(function (file, encoding, callback)
+        return through.obj(function(file, encoding, callback)
         {
             if(file.isNull())
             {
@@ -74,7 +75,7 @@ module.exports = Class.extend(
                 }).toString("utf-8");
             }
             catch(e)
-                       {
+            {
                 // flow normally exits with a non-zero status if errors are found
                 output = e.stdout.toString("utf-8");
             }
@@ -92,6 +93,7 @@ module.exports = Class.extend(
             callback();
         });
     },
+
     /**
      * Dump the results of the type check to the command line.
      *
@@ -101,7 +103,7 @@ module.exports = Class.extend(
     reporter: function()
     {
         var me = this;
-        return through.obj(function (file, encoding, callback)
+        return through.obj(function(file, encoding, callback)
         {
             _.forEach(me.results, gutil.log);
             callback(null, file);
