@@ -53,7 +53,6 @@ module.exports = Class.extend(
     check: function()
     {
         var me = this;
-        this.results = {};
         return through.obj(function(file, encoding, callback)
         {
             if(file.isNull())
