@@ -72,25 +72,15 @@ module.exports = Class.extend(
             {
                 output = execFile(flow, _.union(["check-contents"], me.options), {
                     input: file.contents.toString("utf-8")
-                }).toString("utf-8");
+                });
             }
             catch(e)
             {
                 // flow normally exits with a non-zero status if errors are found
-                output = e.stdout.toString("utf-8");
+                output = e.stdout;
             }
-
-            /**
-             * Results of the type check.
-             *
-             * @property results
-             * @type String
-             * @private
-             */
-            me.results[file.path] = output;
-
-            this.push(file);
-            callback();
+            file.contents = output;
+            callback(null, file);
         });
     },
 
@@ -102,10 +92,12 @@ module.exports = Class.extend(
      */
     reporter: function()
     {
-        var me = this;
         return through.obj(function(file, encoding, callback)
         {
-            _.forEach(me.results, gutil.log);
+            var contents = file.contents.toString(encoding);
+            //console.dir(contents);
+            var errors = JSON.parse(contents).errors;
+            _.forEach(errors, gutil.log);
             callback(null, file);
         });
     }

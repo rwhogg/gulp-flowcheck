@@ -21,23 +21,20 @@ describe("buffer mode", function()
         checker.write(fakeFile);
         checker.once("data", function(file)
         {
-            // check that the file itself did not change
             assert(file.isBuffer());
-            assert.equal(file.contents.toString("utf-8"), stringContents);
-
+            var contents = file.contents.toString("utf-8");
+            var results = JSON.parse(contents);
+            console.dir(results);
+            
+            // check that we failed
+            assert.ok(!results.passed);
+                
             // check that the results are correct
-            _.forEach(gulpFlow.results, function(resultJSON, index)
+            var errors = results.errors;
+            assert.equal(errors.length, 2);
+            _.forEach(errors, function(result, index)
             {
-                // check that the path is correct
-                assert.equal(index, fakeFilePath);
-
-                // check that we failed
-                var result = JSON.parse(resultJSON);
-                assert.ok(!result.passed);
-
                 // check that we got the errors we expected
-                var errors = result.errors;
-                assert.equal(errors.length, 2);
                 var expected = [
                     "object literal This type is incompatible with string",
                     "number This type is incompatible with string"
@@ -50,8 +47,8 @@ describe("buffer mode", function()
                     assert.equal(text, expected[i]);
                 });
                 console.log("we did get this far, right?");
-                done();
             });
+            done();
         });
     });
 });
