@@ -20,8 +20,10 @@ module.exports = Class.extend(
      *
      * @class GulpFlow
      * @constructor
+     * @method init
+     * @param {string[]} options Options to pass to the `flow` binary.
      */
-    init: function()
+    init: function(options)
     {
         /**
          * Options to pass to the `flow` binary.
@@ -30,9 +32,7 @@ module.exports = Class.extend(
          * @type string[]
          * @private
          */
-        this.options = [
-            "--json"
-        ];
+        this.options = options || ["--json"];
 
         /**
          * Name of this plugin.
