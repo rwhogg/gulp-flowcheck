@@ -71,7 +71,7 @@ module.exports = Class.extend(
             try
             {
                 output = execFile(flow, _.union(["check-contents"], me.options), {
-                    input: file.contents.toString("utf-8")
+                    input: file.contents.toString(encoding)
                 });
             }
             catch(e)
