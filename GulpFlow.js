@@ -137,6 +137,7 @@ module.exports = Class.extend(
             var template = fs.readFileSync("mdReporter.hbs", "utf-8");
             var mdTemplate = Handlebars.compile(template);
             console.log("here");
+            console.dir(messages);
             var md = mdTemplate.render({
                 messages: messages,
                 url: url,
