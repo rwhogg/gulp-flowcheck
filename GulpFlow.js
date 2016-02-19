@@ -13,7 +13,6 @@ var PluginError = gutil.PluginError;
 var execFile = require("child_process").execFileSync;
 var fs = require("fs");
 var flow = require("flow-bin");
-var indentString = require("indent-string");
 var fileUrl = require("file-url");
 var Handlebars = require("hogan.js");
 
