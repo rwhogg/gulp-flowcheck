@@ -11,9 +11,11 @@ var through = require("through2");
 var gutil = require("gulp-util");
 var PluginError = gutil.PluginError;
 var execFile = require("child_process").execFileSync;
+var fs = require("fs");
 var flow = require("flow-bin");
 var indentString = require("indent-string");
 var fileUrl = require("file-url");
+var Handlebars = require("hogan.js");
 
 module.exports = Class.extend(
 {
@@ -132,21 +134,17 @@ module.exports = Class.extend(
             var errors = JSON.parse(contents).errors;
             var messages = _.pluck(errors, "message");
             var url = fileUrl(file.path);
-            var md = "";
-            _.forEach(messages, function(message)
-            {
-                md += "<pre>\n";
-                _.forEach(message, function(part)
-                {
-                    var descr = part.descr;
-                    var line = part.line;
-                    var column = part.start;
-                    md += line + ":" + column + ": " + descr + "\n";
-                });
-                md += "</pre>\n";
+            var template = fs.readFileSync("mdReporter.hbs", "utf-8");
+            var mdTemplate = Handlebars.compile(template);
+            console.log("here");
+            console.dir(messages);
+            var md = mdTemplate.render({
+                messages: messages,
+                url: url,
+                path: file.path
             });
             // FIXME: we should store these and log it as a flush instead.
-            gutil.log("\n* " + "[" + file.path + "](" + url + ")\n\n" + indentString(md, " ", 4));
+            gutil.log("\n" + md);
             callback(null, file);
         });
     }
