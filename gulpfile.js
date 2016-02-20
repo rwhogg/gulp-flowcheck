@@ -5,7 +5,7 @@ var jscs = require("gulp-jscs");
 
 gulp.task("lint", function()
 {
-    gulp.src("*.js")
+    gulp.src(["*.js", "test/test.js"])
         .pipe(jscs())
         .pipe(jscs.reporter());
 });
