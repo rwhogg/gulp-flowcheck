@@ -51,7 +51,7 @@ module.exports = Class.extend(
      * Only compatible with buffers at the moment.
      *
      * @method check
-     * @return {Object} A gulp-compatible stream.
+     * @return {Function} A gulp-compatible stream.
      */
     check: function()
     {
@@ -90,7 +90,7 @@ module.exports = Class.extend(
      * Dump the results of the type check to the command line.
      *
      * @method reporter
-     * @return {Object} A gulp-compatible stream.
+     * @return {Function} A gulp-compatible stream.
      */
     reporter: function()
     {
@@ -115,6 +115,12 @@ module.exports = Class.extend(
         });
     },
 
+    /**
+     * Dump the results to the console in a custom Markdown format.
+     *
+     * @method markdownReporter
+     * @return {Function} A gulp-compatible stream.
+     */
     markdownReporter: function()
     {
         return through.obj(function(file, encoding, callback)
