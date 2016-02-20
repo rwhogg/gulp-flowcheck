@@ -21,6 +21,8 @@ gulp.task("flow", function()
 });
 ```
 
+The default reporter uses a JSON format. You'll probably find `GulpFlow.markdownReporter()` easier to read.
+
 ### Automatically adding `@flow` headers
 You can use [gulp-header](https://github.com/godaddy/gulp-header) to add the `@flow` headers to your source code
 automatically:
