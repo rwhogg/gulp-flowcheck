@@ -12,7 +12,16 @@ gulp.task("lint", function()
 
 gulp.task("manual-test", function()
 {
+    console.log("Markdown format");
     return gulp.src("test/buffer.js")
         .pipe(gulpFlow.check())
         .pipe(gulpFlow.markdownReporter());
+});
+
+gulp.task("manual-json-test", function()
+{
+    console.log("Default format");
+    gulp.src("test/buffer.js")
+        .pipe(gulpFlow.check())
+        .pipe(gulpFlow.reporter());
 });
