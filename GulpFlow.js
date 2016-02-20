@@ -129,6 +129,7 @@ module.exports = Class.extend(
             {
                 this.emit("error", new PluginError(me.PLUGIN_NAME, "streams are not supported (yet?)"));
             }
+
             var contents = file.contents.toString(encoding);
             var errors = JSON.parse(contents).errors;
             var messages = _.pluck(errors, "message");
