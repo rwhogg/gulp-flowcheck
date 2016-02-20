@@ -73,6 +73,7 @@ module.exports = Class.extend(
             try
             {
                 output = execFile(flow, _.union(["check-contents"], me.options), {
+                    stdio: ["pipe", "pipe", "ignore"],
                     input: file.contents.toString(encoding)
                 });
             }
