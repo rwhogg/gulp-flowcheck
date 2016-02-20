@@ -2,13 +2,27 @@ var gulp = require("gulp");
 var GulpFlow = require("./GulpFlow.js");
 var gulpFlow = new GulpFlow();
 var jscs = require("gulp-jscs");
+var jshint = require("gulp-jshint");
 
-gulp.task("lint", function()
+var filesToLint = ["*.js", "test/test.js"];
+
+gulp.task("jscs", function()
 {
-    gulp.src(["*.js", "test/test.js"])
+    gulp.src(filesToLint)
         .pipe(jscs())
-        .pipe(jscs.reporter());
+        .pipe(jscs.reporter())
+        .pipe(jscs.reporter("fail"));
 });
+
+gulp.task("jshint", function()
+{
+    gulp.src(filesToLint)
+        .pipe(jshint())
+        .pipe(jshint.reporter())
+        .pipe(jshint.reporter("fail"));
+});
+
+gulp.task("lint", ["jscs", "jshint"]);
 
 gulp.task("manual-test", function()
 {
