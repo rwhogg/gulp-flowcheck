@@ -9,10 +9,10 @@ describe("buffer mode", function()
 {
     it("should work", function(done)
     {
-        var stringContents = fs.readFileSync("test/buffer.js", "utf-8");
+        var stringContents = fs.readFileSync("test/f.js", "utf-8");
         var contents = new Buffer(stringContents);
 
-        var fakeFilePath = "test/buffer.js";
+        var fakeFilePath = "test/f.js";
         var fakeFile = new File({
             contents: contents,
             path: fakeFilePath
@@ -31,11 +31,10 @@ describe("buffer mode", function()
 
             // check that the results are correct
             var errors = results.errors;
-            assert.equal(errors.length, 2);
+            assert.equal(errors.length, 1);
             // check that we got the errors we expected
             var expected = [
-                "object literal This type is incompatible with string",
-                "number This type is incompatible with string"
+                "object literal This type is incompatible with number",
             ];
             var i = -1;
             _.forEach(errors, function(error)

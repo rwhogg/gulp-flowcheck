@@ -2,8 +2,9 @@
 .*/node_modules/.*
 
 [include]
-./test
+test
 
 [libs]
+lib
 
 [options]
