@@ -4,6 +4,7 @@ var es = require("event-stream");
 var fs = require("fs");
 var File = require("vinyl");
 var GulpFlow = require("../GulpFlow.js");
+var PluginError = require("gulp-util").PluginError;
 
 describe("buffer mode", function()
 {
@@ -34,7 +35,7 @@ describe("buffer mode", function()
             assert.equal(errors.length, 1);
             // check that we got the errors we expected
             var expected = [
-                "object literal This type is incompatible with number",
+                "object literal This type is incompatible with number"
             ];
             var i = -1;
             _.forEach(errors, function(error)
@@ -72,5 +73,45 @@ describe("null", function()
     });
 });
 
-// FIXME: move to a separate file test file for reporters
-//describe("reporter stuff");
+// FIXME: move to a separate test file for reporters
+describe("reporters", function()
+{
+    describe("fail reporter", function()
+    {
+        var failReporter;
+        beforeEach(function()
+        {
+            failReporter = new GulpFlow().failReporter();
+        });
+
+        it("should accept empty results", function(done)
+        {
+            var nullFile = new File();
+            failReporter
+                .pipe(es.through(function(file)
+                {
+                    assert.equal(file.contents, null);
+                }, done))
+                .on("error", function(error)
+                {
+                    throw error;
+                });
+            failReporter.write(nullFile);
+            failReporter.end();
+        });
+
+        it("should throw on non-empty results", function(done)
+        {
+            var fakeFile = new File({
+                contents: new Buffer("any contents")
+            });
+            failReporter.on("error", function(error)
+            {
+                assert(error instanceof PluginError);
+                done();
+            });
+            failReporter.write(fakeFile);
+            failReporter.end();
+        });
+    });
+});

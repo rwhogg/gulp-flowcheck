@@ -14,7 +14,7 @@ var execFile = require("child_process").execFileSync;
 var fs = require("fs");
 var flow = require("flow-bin");
 var fileUrl = require("file-url");
-var Handlebars = require("hogan.js");
+var Handlebars = require("hogan.js"); // FIXME: this is Mustache, not Handlebars
 
 module.exports = Class.extend(
 {
@@ -95,6 +95,7 @@ module.exports = Class.extend(
      */
     reporter: function()
     {
+        var me = this;
         return through.obj(function(file, encoding, callback)
         {
             if(file.isNull())
@@ -124,6 +125,7 @@ module.exports = Class.extend(
      */
     markdownReporter: function()
     {
+        var me = this;
         return through.obj(function(file, encoding, callback)
         {
             if(file.isNull())
@@ -151,6 +153,25 @@ module.exports = Class.extend(
             // FIXME: we should store these and log it as a flush instead.
             gutil.log("\n" + md);
             callback(null, file);
+        });
+    },
+
+    /**
+     * Fail the task if there are any results.
+     *
+     * @method failReporter
+     * @return {Function} A gulp-compatible stream.
+     */
+    failReporter: function()
+    {
+        var me = this;
+        return through.obj(function(file, encoding, callback)
+        {
+            if(file.isNull())
+            {
+                return callback(null, file);
+            }
+            this.emit("error", new PluginError(me.PLUGIN_NAME, "Flow errors found!"));
         });
     }
 });
