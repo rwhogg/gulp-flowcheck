@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>/home/bob/src/gulp-flow/GulpFlow.js - Gulp Flow API</title>
+    <title>/home/bob/src/gulp-flowcheck/GulpFlow.js - Gulp Flow API</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -77,7 +77,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: /home/bob/src/gulp-flow/GulpFlow.js</h1>
+<h1 class="file-heading">File: /home/bob/src/gulp-flowcheck/GulpFlow.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -94,7 +94,10 @@ var through = require(&quot;through2&quot;);
 var gutil = require(&quot;gulp-util&quot;);
 var PluginError = gutil.PluginError;
 var execFile = require(&quot;child_process&quot;).execFileSync;
+var fs = require(&quot;fs&quot;);
 var flow = require(&quot;flow-bin&quot;);
+var fileUrl = require(&quot;file-url&quot;);
+var Handlebars = require(&quot;hogan.js&quot;); // FIXME: this is Mustache, not Handlebars
 
 module.exports = Class.extend(
 {
@@ -131,12 +134,11 @@ module.exports = Class.extend(
      * Only compatible with buffers at the moment.
      *
      * @method check
-     * @return {Object} A gulp-compatible stream.
+     * @return {Function} A gulp-compatible stream.
      */
     check: function()
     {
         var me = this;
-        this.results = {};
         return through.obj(function(file, encoding, callback)
         {
             if(file.isNull())
@@ -154,26 +156,17 @@ module.exports = Class.extend(
             try
             {
                 output = execFile(flow, _.union([&quot;check-contents&quot;], me.options), {
-                    input: file.contents.toString(&quot;utf-8&quot;)
-                }).toString(&quot;utf-8&quot;);
+                    stdio: [&quot;pipe&quot;, &quot;pipe&quot;, &quot;ignore&quot;],
+                    input: file.contents.toString(encoding)
+                });
             }
             catch(e)
             {
                 // flow normally exits with a non-zero status if errors are found
-                output = e.stdout.toString(&quot;utf-8&quot;);
+                output = e.stdout;
             }
-
-            /**
-             * Results of the type check.
-             *
-             * @property results
-             * @type String
-             * @private
-             */
-            me.results[file.path] = output;
-
-            this.push(file);
-            callback();
+            file.contents = output; // FIXME: you should parse, correct the paths, and then restringify!
+            callback(null, file);
         });
     },
 
@@ -181,15 +174,87 @@ module.exports = Class.extend(
      * Dump the results of the type check to the command line.
      *
      * @method reporter
-     * @return {Object} A gulp-compatible stream.
+     * @return {Function} A gulp-compatible stream.
      */
     reporter: function()
     {
         var me = this;
         return through.obj(function(file, encoding, callback)
         {
-            _.forEach(me.results, gutil.log);
+            if(file.isNull())
+            {
+                callback();
+                return;
+            }
+
+            if(file.isStream())
+            {
+                this.emit(&quot;error&quot;, new PluginError(me.PLUGIN_NAME, &quot;streams are not supported (yet?)&quot;));
+            }
+
+            var contents = file.contents.toString(encoding);
+            var errors = JSON.parse(contents).errors;
+            gutil.log(&quot;\n&quot; + file.path + &quot;:&quot;);
+            _.forEach(errors, gutil.log);
             callback(null, file);
+        });
+    },
+
+    /**
+     * Dump the results to the console in a custom Markdown format.
+     *
+     * @method markdownReporter
+     * @return {Function} A gulp-compatible stream.
+     */
+    markdownReporter: function()
+    {
+        var me = this;
+        return through.obj(function(file, encoding, callback)
+        {
+            if(file.isNull())
+            {
+                callback();
+                return;
+            }
+
+            if(file.isStream())
+            {
+                this.emit(&quot;error&quot;, new PluginError(me.PLUGIN_NAME, &quot;streams are not supported (yet?)&quot;));
+            }
+
+            var contents = file.contents.toString(encoding);
+            var errors = JSON.parse(contents).errors;
+            var messages = _.pluck(errors, &quot;message&quot;);
+            var url = fileUrl(file.path);
+            var template = fs.readFileSync(&quot;mdReporter.hbs&quot;, &quot;utf-8&quot;);
+            var mdTemplate = Handlebars.compile(template);
+            var md = mdTemplate.render({
+                messages: messages,
+                url: url,
+                path: file.path
+            });
+            // FIXME: we should store these and log it as a flush instead.
+            gutil.log(&quot;\n&quot; + md);
+            callback(null, file);
+        });
+    },
+
+    /**
+     * Fail the task if there are any results.
+     *
+     * @method failReporter
+     * @return {Function} A gulp-compatible stream.
+     */
+    failReporter: function()
+    {
+        var me = this;
+        return through.obj(function(file, encoding, callback)
+        {
+            if(file.isNull())
+            {
+                return callback(null, file);
+            }
+            this.emit(&quot;error&quot;, new PluginError(me.PLUGIN_NAME, &quot;Flow errors found!&quot;));
         });
     }
 });

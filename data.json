@@ -7,8 +7,8 @@
         "version": "0.1.1"
     },
     "files": {
-        "/home/bob/src/gulp-flow/GulpFlow.js": {
-            "name": "/home/bob/src/gulp-flow/GulpFlow.js",
+        "/home/bob/src/gulp-flowcheck/GulpFlow.js": {
+            "name": "/home/bob/src/gulp-flowcheck/GulpFlow.js",
             "modules": {
                 "GulpFlow": 1
             },
@@ -30,8 +30,8 @@
             "fors": {},
             "namespaces": {},
             "tag": "main",
-            "file": "/home/bob/src/gulp-flow/GulpFlow.js",
-            "line": 18,
+            "file": "/home/bob/src/gulp-flowcheck/GulpFlow.js",
+            "line": 21,
             "description": "GulpFlow provides a [gulp](https://gulpjs.com) plugin for [Flow](http://flowtype.org).",
             "itemtype": "main"
         }
@@ -47,8 +47,8 @@
             "extension_for": [],
             "module": "GulpFlow",
             "namespace": "",
-            "file": "/home/bob/src/gulp-flow/GulpFlow.js",
-            "line": 18,
+            "file": "/home/bob/src/gulp-flowcheck/GulpFlow.js",
+            "line": 21,
             "description": "GulpFlow is a Gulp plugin for type-checking code with `flow`.",
             "is_constructor": 1
         }
@@ -56,8 +56,8 @@
     "elements": {},
     "classitems": [
         {
-            "file": "/home/bob/src/gulp-flow/GulpFlow.js",
-            "line": 26,
+            "file": "/home/bob/src/gulp-flowcheck/GulpFlow.js",
+            "line": 29,
             "description": "Options to pass to the `flow` binary.",
             "itemtype": "property",
             "name": "options",
@@ -68,8 +68,8 @@
             "module": "GulpFlow"
         },
         {
-            "file": "/home/bob/src/gulp-flow/GulpFlow.js",
-            "line": 37,
+            "file": "/home/bob/src/gulp-flowcheck/GulpFlow.js",
+            "line": 40,
             "description": "Name of this plugin.",
             "itemtype": "property",
             "name": "PLUGIN_NAME",
@@ -78,39 +78,53 @@
             "module": "GulpFlow"
         },
         {
-            "file": "/home/bob/src/gulp-flow/GulpFlow.js",
-            "line": 46,
+            "file": "/home/bob/src/gulp-flowcheck/GulpFlow.js",
+            "line": 49,
             "description": "Check for type errors and store them in `this.results`.\nOnly compatible with buffers at the moment.",
             "itemtype": "method",
             "name": "check",
             "return": {
                 "description": "A gulp-compatible stream.",
-                "type": "Object"
+                "type": "Function"
             },
             "class": "GulpFlow",
             "module": "GulpFlow"
         },
         {
-            "file": "/home/bob/src/gulp-flow/GulpFlow.js",
-            "line": 83,
-            "description": "Results of the type check.",
-            "itemtype": "property",
-            "name": "results",
-            "type": "String",
-            "access": "private",
-            "tagname": "",
-            "class": "GulpFlow",
-            "module": "GulpFlow"
-        },
-        {
-            "file": "/home/bob/src/gulp-flow/GulpFlow.js",
-            "line": 97,
+            "file": "/home/bob/src/gulp-flowcheck/GulpFlow.js",
+            "line": 90,
             "description": "Dump the results of the type check to the command line.",
             "itemtype": "method",
             "name": "reporter",
             "return": {
                 "description": "A gulp-compatible stream.",
-                "type": "Object"
+                "type": "Function"
+            },
+            "class": "GulpFlow",
+            "module": "GulpFlow"
+        },
+        {
+            "file": "/home/bob/src/gulp-flowcheck/GulpFlow.js",
+            "line": 120,
+            "description": "Dump the results to the console in a custom Markdown format.",
+            "itemtype": "method",
+            "name": "markdownReporter",
+            "return": {
+                "description": "A gulp-compatible stream.",
+                "type": "Function"
+            },
+            "class": "GulpFlow",
+            "module": "GulpFlow"
+        },
+        {
+            "file": "/home/bob/src/gulp-flowcheck/GulpFlow.js",
+            "line": 159,
+            "description": "Fail the task if there are any results.",
+            "itemtype": "method",
+            "name": "failReporter",
+            "return": {
+                "description": "A gulp-compatible stream.",
+                "type": "Function"
             },
             "class": "GulpFlow",
             "module": "GulpFlow"

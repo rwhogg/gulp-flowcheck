@@ -1,3 +1,0 @@
-[submodule ".git-standards"]
-	path = .git-standards
-	url = https://github.com/rwhogg/git-standards.git
