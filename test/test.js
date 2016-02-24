@@ -100,18 +100,37 @@ describe("reporters", function()
             failReporter.end();
         });
 
-        it("should throw on non-empty results", function(done)
+        describe("json results", function()
         {
-            var fakeFile = new File({
-                contents: new Buffer("{\"passed\": false}")
-            });
-            failReporter.on("error", function(error)
+            function check(contents, result, done)
             {
-                assert(error instanceof PluginError);
-                done();
+                var fakeFile = new File({
+                    contents: new Buffer(contents)
+                });
+                failReporter
+                    .on("error", function(error)
+                    {
+                        assert(!result);
+                        assert(error instanceof PluginError);
+                        done();
+                    })
+                    .pipe(es.through(function(file)
+                    {
+                        assert(result);
+                    }, done))
+                failReporter.write(fakeFile);
+                failReporter.end();
+            }
+
+            it("should throw if we don't pass", function(done)
+            {
+                check("{\"passed\": false}", false, done);
             });
-            failReporter.write(fakeFile);
-            failReporter.end();
+
+            it("should not throw if we pass", function(done)
+            {
+                check("{\"passed\": true}", true, done);
+            });
         });
     });
 });
