@@ -117,7 +117,7 @@ describe("reporters", function()
                     .pipe(es.through(function(file)
                     {
                         assert(result);
-                    }, done))
+                    }, done));
                 failReporter.write(fakeFile);
                 failReporter.end();
             }
