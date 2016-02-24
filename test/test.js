@@ -103,7 +103,7 @@ describe("reporters", function()
         it("should throw on non-empty results", function(done)
         {
             var fakeFile = new File({
-                contents: new Buffer("any contents")
+                contents: new Buffer("{\"passed\": false}")
             });
             failReporter.on("error", function(error)
             {
