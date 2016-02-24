@@ -26,7 +26,6 @@ gulp.task("lint", ["jscs", "jshint"]);
 
 gulp.task("manual-test", function()
 {
-    console.log("Markdown format");
     return gulp.src("test/[fg].js")
         .pipe(gulpFlow.check())
         .pipe(gulpFlow.markdownReporter());
@@ -34,8 +33,14 @@ gulp.task("manual-test", function()
 
 gulp.task("manual-json-test", function()
 {
-    console.log("Default format");
     gulp.src("test/[fg].js")
         .pipe(gulpFlow.check())
         .pipe(gulpFlow.reporter());
+});
+
+gulp.task("manual-fail-test", function()
+{
+    return gulp.src("test/[fg].js")
+        .pipe(gulpFlow.check())
+        .pipe(gulpFlow.failReporter());
 });

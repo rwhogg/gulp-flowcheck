@@ -171,6 +171,12 @@ module.exports = Class.extend(
             {
                 return callback(null, file);
             }
+            var passed = JSON.parse(file.contents.toString(encoding)).passed;
+            if(passed)
+            {
+                return callback(null, file);
+            }
+            console.dir(file.contents.toString());
             this.emit("error", new PluginError(me.PLUGIN_NAME, "Flow errors found!"));
         });
     }
