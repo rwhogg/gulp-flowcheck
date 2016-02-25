@@ -1,7 +1,6 @@
 /* @flow */
 var f = require("./f.js");
-function g(a, b)
-{
+function g(a, b) {
     return a + f(b);
 }
 

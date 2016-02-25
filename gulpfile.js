@@ -6,16 +6,14 @@ var jshint = require("gulp-jshint");
 
 var filesToLint = ["*.js", "test/test.js"];
 
-gulp.task("jscs", function()
-{
+gulp.task("jscs", function() {
     gulp.src(filesToLint)
         .pipe(jscs())
         .pipe(jscs.reporter())
         .pipe(jscs.reporter("fail"));
 });
 
-gulp.task("jshint", function()
-{
+gulp.task("jshint", function() {
     gulp.src(filesToLint)
         .pipe(jshint())
         .pipe(jshint.reporter())
@@ -24,22 +22,19 @@ gulp.task("jshint", function()
 
 gulp.task("lint", ["jscs", "jshint"]);
 
-gulp.task("manual-test", function()
-{
+gulp.task("manual-test", function() {
     return gulp.src("test/[fg].js")
         .pipe(gulpFlow.check())
         .pipe(gulpFlow.markdownReporter());
 });
 
-gulp.task("manual-json-test", function()
-{
+gulp.task("manual-json-test", function() {
     gulp.src("test/[fg].js")
         .pipe(gulpFlow.check())
         .pipe(gulpFlow.reporter());
 });
 
-gulp.task("manual-fail-test", function()
-{
+gulp.task("manual-fail-test", function() {
     return gulp.src("test/[fg].js")
         .pipe(gulpFlow.check())
         .pipe(gulpFlow.failReporter());
