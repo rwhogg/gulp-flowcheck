@@ -54,3 +54,4 @@ jspm_packages
 .node_repl_historydocs
 docs
 typings
+checkstyle.xml

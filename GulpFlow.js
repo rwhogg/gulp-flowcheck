@@ -16,16 +16,14 @@ var flow = require("flow-bin");
 var fileUrl = require("file-url");
 var Handlebars = require("hogan.js"); // FIXME: this is Mustache, not Handlebars
 
-module.exports = Class.extend(
-{
+module.exports = Class.extend({
     /**
      * GulpFlow is a Gulp plugin for type-checking code with `flow`.
      *
      * @class GulpFlow
      * @constructor
      */
-    init: function()
-    {
+    init: function() {
         /**
          * Options to pass to the `flow` binary.
          *
@@ -53,32 +51,26 @@ module.exports = Class.extend(
      * @method check
      * @return {Function} A gulp-compatible stream.
      */
-    check: function()
-    {
+    check: function() {
         var me = this;
-        return through.obj(function(file, encoding, callback)
-        {
-            if(file.isNull())
-            {
+        return through.obj(function(file, encoding, callback) {
+            if(file.isNull()) {
                 callback();
                 return;
             }
 
-            if(file.isStream())
-            {
+            if(file.isStream()) {
                 this.emit("error", new PluginError(me.PLUGIN_NAME, "streams are not supported (yet?)"));
             }
 
             var output;
-            try
-            {
+            try{
                 output = execFile(flow, _.union(["check-contents"], me.options), {
                     stdio: ["pipe", "pipe", "ignore"],
                     input: file.contents.toString(encoding)
                 });
             }
-            catch(e)
-            {
+            catch(e) {
                 // flow normally exits with a non-zero status if errors are found
                 output = e.stdout;
             }
@@ -93,19 +85,15 @@ module.exports = Class.extend(
      * @method reporter
      * @return {Function} A gulp-compatible stream.
      */
-    reporter: function()
-    {
+    reporter: function() {
         var me = this;
-        return through.obj(function(file, encoding, callback)
-        {
-            if(file.isNull())
-            {
+        return through.obj(function(file, encoding, callback) {
+            if(file.isNull()) {
                 callback();
                 return;
             }
 
-            if(file.isStream())
-            {
+            if(file.isStream()) {
                 this.emit("error", new PluginError(me.PLUGIN_NAME, "streams are not supported (yet?)"));
             }
 
@@ -123,20 +111,17 @@ module.exports = Class.extend(
      * @method markdownReporter
      * @return {Function} A gulp-compatible stream.
      */
-    markdownReporter: function()
-    {
+    markdownReporter: function() {
         var me = this;
-        return through.obj(function(file, encoding, callback)
-        {
-            if(file.isNull())
-            {
+        return through.obj(function(file, encoding, callback) {
+            if(file.isNull()) {
                 callback();
                 return;
             }
 
-            if(file.isStream())
-            {
-                this.emit("error", new PluginError(me.PLUGIN_NAME, "streams are not supported (yet?)"));
+            if(file.isStream()) {
+                this.emit("error", new PluginError(me.PLUGIN_NAME,
+                    "streams are not supported (yet?)"));
             }
 
             var contents = file.contents.toString(encoding);
@@ -162,18 +147,14 @@ module.exports = Class.extend(
      * @method failReporter
      * @return {Function} A gulp-compatible stream.
      */
-    failReporter: function()
-    {
+    failReporter: function() {
         var me = this;
-        return through.obj(function(file, encoding, callback)
-        {
-            if(file.isNull())
-            {
+        return through.obj(function(file, encoding, callback) {
+            if(file.isNull()) {
                 return callback(null, file);
             }
             var passed = JSON.parse(file.contents.toString(encoding)).passed;
-            if(passed)
-            {
+            if(passed) {
                 return callback(null, file);
             }
             this.emit("error", new PluginError(me.PLUGIN_NAME, "Flow errors found!"));
