@@ -34,7 +34,7 @@
     "yuidocjs": "^0.10.0"
   },
   "dependencies": {
-    "file-url": "^1.0.1",
+    "file-url": "^1.1.0",
     "flow-bin": "^0.22.0",
     "gulp-util": "^3.0.6",
     "hogan.js": "^3.0.2",
