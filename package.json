@@ -1,6 +1,6 @@
 {
   "name": "gulp-flowcheck",
-  "version": "0.3.0-dev",
+  "version": "0.2.1",
   "description": "Gulp plugin for Flow",
   "main": "GulpFlow.js",
   "scripts": {
@@ -34,8 +34,8 @@
     "yuidocjs": "^0.10.0"
   },
   "dependencies": {
-    "file-url": "^1.0.1",
-    "flow-bin": "^0.22.0",
+    "file-url": "^1.1.0",
+    "flow-bin": "^0.22.1",
     "gulp-util": "^3.0.6",
     "hogan.js": "^3.0.2",
     "through2": "^2.0.1",
