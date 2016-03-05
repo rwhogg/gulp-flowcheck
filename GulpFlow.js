@@ -14,7 +14,7 @@ var execFile = require("child_process").execFileSync;
 var fs = require("fs");
 var flow = require("flow-bin");
 var fileUrl = require("file-url");
-var mustache = require("hogan.js"); // FIXME: this is Mustache, not mustache
+var mustache = require("hogan.js");
 
 module.exports = Class.extend({
     /**
@@ -128,7 +128,7 @@ module.exports = Class.extend({
             var errors = JSON.parse(contents).errors;
             var messages = _.pluck(errors, "message");
             var url = fileUrl(file.path);
-            var template = fs.readFileSync("mdReporter.hbs", "utf-8");
+            var template = fs.readFileSync(__dirname + "/mdReporter.hbs", "utf-8");
             var mdTemplate = mustache.compile(template);
             var md = mdTemplate.render({
                 messages: messages,
