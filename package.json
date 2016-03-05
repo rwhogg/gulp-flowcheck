@@ -1,6 +1,6 @@
 {
   "name": "gulp-flowcheck",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Gulp plugin for Flow",
   "main": "GulpFlow.js",
   "scripts": {
