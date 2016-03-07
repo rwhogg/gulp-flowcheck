@@ -54,6 +54,14 @@ module.exports = Class.extend({
     check: function() {
         var me = this;
         return through.obj(function(file, encoding, callback) {
+            // make sure .flowconfig exists
+            try {
+                fs.accessSync(".flowconfig");
+            }
+            catch(e) {
+                this.emit("error", new PluginError(me.PLUGIN_NAME, "no .flowconfig file was found"));
+            }
+
             if(file.isNull()) {
                 callback();
                 return;
