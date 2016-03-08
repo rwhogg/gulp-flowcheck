@@ -32,7 +32,7 @@ automatically:
 var header = require("gulp-header");
 
 gulp.src("*.js")
-	.pipe(header("/* @flow */"))
-	.pipe(gulpFlow.check())
+    .pipe(header("/* @flow */"))
+    .pipe(gulpFlow.check())
 	...
 ```
