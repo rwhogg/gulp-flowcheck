@@ -57,3 +57,4 @@ typings
 
 # IDE files
 nbproject
+.eclipse
