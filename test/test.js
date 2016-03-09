@@ -6,46 +6,51 @@ var File = require("vinyl");
 var GulpFlow = require("../GulpFlow.js");
 var PluginError = require("gulp-util").PluginError;
 
+function testFunction(done, classToCreate)
+{
+    var stringContents = fs.readFileSync("test/f.js", "utf-8");
+    var contents = new classToCreate(stringContents);
+
+    var fakeFilePath = "test/f.js";
+    var fakeFile = new File({
+        contents: contents,
+        path: fakeFilePath
+    });
+    var gulpFlow = new GulpFlow();
+    var checker = gulpFlow.check();
+    checker.write(fakeFile);
+    checker.once("data", function(file)
+    {
+        assert(file.isBuffer());
+        var contents = file.contents.toString("utf-8");
+        var results = JSON.parse(contents);
+
+        // check that we failed
+        assert.ok(!results.passed);
+
+        // check that the results are correct
+        var errors = results.errors;
+        assert.equal(errors.length, 1);
+        // check that we got the errors we expected
+        var expected = [
+            "object literal This type is incompatible with number"
+        ];
+        var i = -1;
+        _.forEach(errors, function(error)
+        {
+            i++;
+            var text = _.pluck(error.message, "descr").join(" ");
+            assert.equal(text, expected[i]);
+        });
+        done();
+    });
+}
+
 describe("buffer mode", function()
 {
     it("should work", function(done)
     {
-        var stringContents = fs.readFileSync("test/f.js", "utf-8");
-        var contents = new Buffer(stringContents);
-
-        var fakeFilePath = "test/f.js";
-        var fakeFile = new File({
-            contents: contents,
-            path: fakeFilePath
-        });
-        var gulpFlow = new GulpFlow();
-        var checker = gulpFlow.check();
-        checker.write(fakeFile);
-        checker.once("data", function(file)
-        {
-            assert(file.isBuffer());
-            var contents = file.contents.toString("utf-8");
-            var results = JSON.parse(contents);
-
-            // check that we failed
-            assert.ok(!results.passed);
-
-            // check that the results are correct
-            var errors = results.errors;
-            assert.equal(errors.length, 1);
-            // check that we got the errors we expected
-            var expected = [
-                "object literal This type is incompatible with number"
-            ];
-            var i = -1;
-            _.forEach(errors, function(error)
-            {
-                i++;
-                var text = _.pluck(error.message, "descr").join(" ");
-                assert.equal(text, expected[i]);
-            });
-            done();
-        });
+        testFunction(done, Buffer);
     });
 });
 
