@@ -59,7 +59,9 @@ describe("buffer mode", function() {
             path: fakeFilePath
         });
         // simulate the file not being found
-        var stub = sinon.stub(fs, "accessSync", function() { throw new Error(); });
+        var stub = sinon.stub(fs, "accessSync", function() {
+            throw new Error();
+        });
         var gulpFlow = new GulpFlow();
         var checker = gulpFlow.check();
         try {
