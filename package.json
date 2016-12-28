@@ -4,7 +4,7 @@
   "description": "Gulp plugin for Flow",
   "main": "GulpFlow.js",
   "scripts": {
-    "prepublish": "git submodule update --init && git submodule update && npm run-script lint",
+    "prepublish": "npm run-script lint",
     "lint": "gulp lint",
     "test": "istanbul cover _mocha test/test.js",
     "doc": "yuidoc"
